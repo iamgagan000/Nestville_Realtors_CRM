@@ -1,0 +1,2 @@
+import React from "react";
+export default function Select({ label, name, options, form, setForm, custom }) { const labels = new Map((custom || []).map(x => [x.v, x.l])); return <label>{label}<select value={form[name] ?? ""} onChange={e => setForm({...form,[name]:e.target.value})}>{options.map((o,i) => { const l = labels.get(o) ?? (o || "Select"); return <option key={String(o)+i} value={o}>{l}</option>; })}</select></label>; }

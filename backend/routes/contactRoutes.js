@@ -1,0 +1,3 @@
+import {Router} from "express"; import {protect} from "../middleware/auth.js"; import Contact from "../models/Contact.js"; import {makeCrud} from "../controllers/crudFactory.js";
+const r=Router(); r.use(protect); const c=makeCrud(Contact,{populate:[["assignedTo","name email"]]});
+r.get("/",async(req,res,next)=>{try{const s=req.query.search||"";const f=s?{$or:[{name:{$regex:s,$options:"i"}},{phone:{$regex:s,$options:"i"}},{email:{$regex:s,$options:"i"}},{location:{$regex:s,$options:"i"}}]}:{};const items=await Contact.find(f).populate("assignedTo","name email").sort({createdAt:-1});res.json({success:true,items})}catch(e){next(e)}});r.post("/",c.create);r.get("/:id",c.get);r.put("/:id",c.update);r.delete("/:id",c.remove);export default r;

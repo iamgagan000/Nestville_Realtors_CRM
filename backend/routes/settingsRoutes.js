@@ -1,0 +1,2 @@
+import {Router} from "express";import {protect,adminOnly} from "../middleware/auth.js";import Setting from "../models/Setting.js";
+const r=Router();r.use(protect);r.get("/",async(req,res,next)=>{try{let s=await Setting.findOne({key:"company"});if(!s)s=await Setting.create({key:"company"});res.json({success:true,setting:s})}catch(e){next(e)}});r.put("/",adminOnly,async(req,res,next)=>{try{const s=await Setting.findOneAndUpdate({key:"company"},req.body,{new:true,upsert:true,setDefaultsOnInsert:true});res.json({success:true,setting:s})}catch(e){next(e)}});export default r;

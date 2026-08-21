@@ -1,0 +1,2 @@
+import React from "react";
+export default function Field({ label, name, form, setForm, required = false, type = "text" }) { const value = Array.isArray(form[name]) ? form[name].join(", ") : form[name] ?? ""; return <label>{label}<input required={required} type={type} value={value} onChange={e => setForm({...form,[name]:Array.isArray(form[name]) ? e.target.value.split(",").map(x => x.trim()).filter(Boolean) : e.target.value})}/></label>; }

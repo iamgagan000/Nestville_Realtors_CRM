@@ -1,0 +1,2 @@
+import {Router} from "express";import {protect} from "../middleware/auth.js";import FollowUp from "../models/FollowUp.js";import {makeCrud} from "../controllers/crudFactory.js";
+const r=Router();r.use(protect);const c=makeCrud(FollowUp,{populate:[["contact","name phone"],["lead","name phone"],["assignedTo","name"]]});r.get("/",c.list);r.post("/",c.create);r.get("/:id",c.get);r.put("/:id",c.update);r.delete("/:id",c.remove);export default r;

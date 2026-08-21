@@ -1,0 +1,1 @@
+import {Router} from "express";import {protect,adminOnly} from "../middleware/auth.js";import {createUser,listUsers,updateUser,deleteUser} from "../controllers/userController.js";const r=Router();r.use(protect,adminOnly);r.get("/",listUsers);r.post("/",createUser);r.put("/:id",updateUser);r.delete("/:id",deleteUser);export default r;
